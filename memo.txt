@@ -1,0 +1,173 @@
+▼laravel5から9へのアップデート方法
+
+https://stackoverflow.com/questions/64074953/upgrade-laravel-project-from-5-5-to-latest-version-8
+
+以下はlaravel8へのアップデートだが、urlをlaravel9のものに変えてjsonやphpを差し替える
+
+Copy the your current composer.json file.
+Now go here https://github.com/laravel-shift/laravel-8.x/blob/master/composer.json and copy composer.json file and replace with your existing composer.json file.
+Again go to https://github.com/laravel-shift/laravel-8.x/blob/master/app/Exceptions/Handler.php and copy the Handler.php file and go to app/exceptions/Handler.php replace Handler.php with your existing file.
+Run the command composer update.
+Check your old or your copied composer.json file and if packages have been added to it then you can add packages through this command composer require <package name>.
+Now, again run composer update command.
+
+▼laravel9のcomposer.json
+{
+    "name": "laravel/laravel",
+    "type": "project",
+    "description": "The Laravel Framework.",
+    "keywords": ["framework", "laravel"],
+    "license": "MIT",
+    "require": {
+        "php": "^8.0.2",
+        "guzzlehttp/guzzle": "^7.2",
+        "laravel/framework": "^9.19",
+        "laravel/sanctum": "^3.0",
+        "laravel/tinker": "^2.7"
+    },
+    "require-dev": {
+        "fakerphp/faker": "^1.9.1",
+        "laravel/pint": "^1.0",
+        "laravel/sail": "^1.0.1",
+        "mockery/mockery": "^1.4.4",
+        "nunomaduro/collision": "^6.1",
+        "phpunit/phpunit": "^9.5.10",
+        "spatie/laravel-ignition": "^1.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/",
+            "Database\\Factories\\": "database/factories/",
+            "Database\\Seeders\\": "database/seeders/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "post-autoload-dump": [
+            "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
+            "@php artisan package:discover --ansi"
+        ],
+        "post-update-cmd": [
+            "@php artisan vendor:publish --tag=laravel-assets --ansi --force"
+        ],
+        "post-root-package-install": [
+            "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
+        ],
+        "post-create-project-cmd": [
+            "@php artisan key:generate --ansi"
+        ]
+    },
+    "extra": {
+        "laravel": {
+            "dont-discover": []
+        }
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "preferred-install": "dist",
+        "sort-packages": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
+
+
+▼laravel9のHandler.php(app/Exceptions/Handler.php)
+<?php
+
+namespace App\Exceptions;
+
+use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Throwable;
+
+class Handler extends ExceptionHandler
+{
+    /**
+     * A list of exception types with their corresponding custom log levels.
+     *
+     * @var array<class-string<\Throwable>, \Psr\Log\LogLevel::*>
+     */
+    protected $levels = [
+        //
+    ];
+
+    /**
+     * A list of the exception types that are not reported.
+     *
+     * @var array<int, class-string<\Throwable>>
+     */
+    protected $dontReport = [
+        //
+    ];
+
+    /**
+     * A list of the inputs that are never flashed to the session on validation exceptions.
+     *
+     * @var array<int, string>
+     */
+    protected $dontFlash = [
+        'current_password',
+        'password',
+        'password_confirmation',
+    ];
+
+    /**
+     * Register the exception handling callbacks for the application.
+     *
+     * @return void
+     */
+    public function register()
+    {
+        $this->reportable(function (Throwable $e) {
+            //
+        });
+    }
+}
+
+▼php.iniのextension
+extension=curl
+extension=fileinfo
+extension=openssl
+extension=zip
+
+▼composer updateで Call to undefined function str_slug()がでたら以下を実行する。
+composer require laravel/helpers
+
+
+▼TrustProxies.phpを以下のように修正
+[root@localhost laravel]# diff laravel55/app/Http/Middleware/TrustProxies.php laravel55org/app/Http/Middleware/TrustProxies.php
+6c6
+< use Illuminate\Http\Middleware\TrustProxies as Middleware;
+---
+> use Fideloper\Proxy\TrustProxies as Middleware;
+22,27c22,28
+<     protected $headers =
+<         Request::HEADER_X_FORWARDED_FOR |
+<         Request::HEADER_X_FORWARDED_HOST |
+<         Request::HEADER_X_FORWARDED_PORT |
+<         Request::HEADER_X_FORWARDED_PROTO |
+<         Request::HEADER_X_FORWARDED_AWS_ELB;
+---
+>     protected $headers = [
+>         Request::HEADER_FORWARDED => 'FORWARDED',
+>         Request::HEADER_X_FORWARDED_FOR => 'X_FORWARDED_FOR',
+>         Request::HEADER_X_FORWARDED_HOST => 'X_FORWARDED_HOST',
+>         Request::HEADER_X_FORWARDED_PORT => 'X_FORWARDED_PORT',
+>         Request::HEADER_X_FORWARDED_PROTO => 'X_FORWARDED_PROTO',
+>     ];
+
+▼cache:clearでエラーでるとき
+[root@localhost laravel55org]# php artisan cache:clear
+
+   ERROR  Failed to clear cache. Make sure you have the appropriate permissions.
+
+アプリケーション/storage/framework/cache/data
+
+があるか確認。なければdataを作成
