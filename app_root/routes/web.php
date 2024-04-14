@@ -27,5 +27,8 @@ Route::get('/auth/login', 'Auth\LoginController@showLoginForm');
 Route::post('/auth/login', 'Auth\LoginController@login');
 Route::get('/auth/logout', 'Auth\LoginController@logout');
 
+Route::get('/form', 'TestController@form');
+Route::post('/form', 'TestController@confirm');
+Route::post('/form/complete', 'TestController@complete');
 
 	
