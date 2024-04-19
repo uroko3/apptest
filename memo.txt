@@ -171,3 +171,10 @@ composer require laravel/helpers
 アプリケーション/storage/framework/cache/data
 
 があるか確認。なければdataを作成
+
+▼php artisan route:list
+で
+Trait "Illuminate\Foundation\Auth\RegistersUsers" not found
+が出る場合、
+composer require laravel/ui
+を実行する
