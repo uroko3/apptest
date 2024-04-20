@@ -2,7 +2,9 @@
 
 namespace App\Exceptions;
 
+use Illuminate\Validation\ValidationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use \Illuminate\Support\Facades\Log;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -25,6 +27,7 @@ class Handler extends ExceptionHandler
 		//
 	];
 	
+	
 	/**
 	 * A list of the inputs that are never flashed to the session on validation exceptions.
 	 *
@@ -36,6 +39,9 @@ class Handler extends ExceptionHandler
 		'password_confirmation',
 	];
 	
+	
+	
+	
 	/**
 	 * Register the exception handling callbacks for the application.
 	 *
@@ -43,8 +49,23 @@ class Handler extends ExceptionHandler
 	 */
 	public function register()
 	{
+		// これしないとValidationExceptionなどのreportが除外される
+		$this->internalDontReport = [];
+		
 		$this->reportable(function (Throwable $e) {
-			//
+			if($e instanceof ValidationException) {
+				//dd('reportable');
+				Log::debug("hogehoge");
+			}
 		});
+		
+		$this->renderable(function (Throwable $e) {
+			
+			if($e instanceof ValidationException) {
+				//dd('renderable');
+				return redirect('/home');
+			}
+		});
+
 	}
 }
