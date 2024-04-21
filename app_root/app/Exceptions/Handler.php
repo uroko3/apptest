@@ -3,6 +3,7 @@
 namespace App\Exceptions;
 
 use Illuminate\Validation\ValidationException;
+use App\Exceptions\TestException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use \Illuminate\Support\Facades\Log;
 use Throwable;
@@ -55,6 +56,13 @@ class Handler extends ExceptionHandler
 		$this->reportable(function (Throwable $e) {
 			if($e instanceof ValidationException) {
 				//dd('reportable');
+				Log::debug("hogehoge");
+			}
+		});
+		
+		$this->reportable(function (Throwable $e) {
+			if($e instanceof TestException) {
+				dd('reportable TestException');
 				Log::debug("hogehoge");
 			}
 		});

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
+use App\Exceptions\TestException;
 use Validator;
 use Exception;
 use Throwable;
@@ -15,7 +16,8 @@ class TestController extends Controller
 	}
 	
 	public function form() {
-		report("abc");
+		throw new TestException();
+		
 		throw ValidationException::withMessages(['a'=>'b']);
 		
 		return view('form');
