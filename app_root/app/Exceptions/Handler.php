@@ -68,11 +68,12 @@ class Handler extends ExceptionHandler
 		});
 		
 		$this->renderable(function (Throwable $e) {
-			
+			/*
 			if($e instanceof ValidationException) {
 				//dd('renderable');
 				return redirect('/home');
 			}
+			*/
 		});
 
 	}

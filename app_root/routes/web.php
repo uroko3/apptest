@@ -12,7 +12,7 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('home');
 });
 
 
@@ -31,4 +31,10 @@ Route::get('/form', 'TestController@form');
 Route::post('/form', 'TestController@confirm');
 Route::post('/form/complete', 'TestController@complete');
 
-	
+Route::group(['prefix' => 'gitlab'], function(){
+	Route::get('', 'GitlabController@index')->name('gitlab');
+	Route::get('oauth', 'GitlabController@oauth')->name('aouth');
+	Route::get('ggg', 'GitlabController@ggg');
+});
+
+

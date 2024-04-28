@@ -12,5 +12,6 @@
 	<a href="/auth/login">ログイン</a><br>
 	<a href="/auth/register">会員登録</a>
 @endif
+<div><a href="{{route('gitlab')}}">gitlab</a></div>
 </body>
 </html>
