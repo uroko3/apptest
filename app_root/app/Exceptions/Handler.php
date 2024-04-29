@@ -2,9 +2,11 @@
 
 namespace App\Exceptions;
 
+use Symfony\Component\HttpKernel\Exception\HttpException;
 use Illuminate\Validation\ValidationException;
 use App\Exceptions\TestException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Http\Request;
 use \Illuminate\Support\Facades\Log;
 use Throwable;
 
@@ -53,27 +55,22 @@ class Handler extends ExceptionHandler
 		// これしないとValidationExceptionなどのreportが除外される
 		$this->internalDontReport = [];
 		
-		$this->reportable(function (Throwable $e) {
-			if($e instanceof ValidationException) {
-				//dd('reportable');
-				Log::debug("hogehoge");
-			}
+		$this->reportable(function (ValidationException $e) {
+			//dd('reportable');
+			Log::debug("hogehoge");
 		});
 		
-		$this->reportable(function (Throwable $e) {
-			if($e instanceof TestException) {
-				dd('reportable TestException');
-				Log::debug("hogehoge");
-			}
+		$this->reportable(function (HttpException $e) {
+			Log::debug("http_exception desu");
 		});
 		
-		$this->renderable(function (Throwable $e) {
-			/*
-			if($e instanceof ValidationException) {
-				//dd('renderable');
-				return redirect('/home');
-			}
-			*/
+		$this->reportable(function (TestException $e) {
+			dd('reportable TestException');
+			Log::debug("hogehoge");
+		});
+		
+		$this->renderable(function (Throwable $e, Request $request) {
+			return response()->view('errors.500', ['url' => 'xxx'], 500);
 		});
 
 	}

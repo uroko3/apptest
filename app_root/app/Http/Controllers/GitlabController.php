@@ -146,11 +146,12 @@ class GitlabController extends Controller
 	}
 	
 	public function ggg() {
-		config(['gitlab.connections.main.token' => 'eef3c1e5da98dbba609755d18aa411f9d373070332813292a49e3a54f6e03af5']);
-		
+		config(['gitlab.connections.alternative.token' => 'c5e70ec08e4cb10b798faf32b8b283d7699527b407e4150147e99f471633ccd7']);
+				
 		$base_url = config('gitlab_my.base_url');
+		GitLab::setDefaultConnection('alternative');
 		GitLab::setUrl($base_url);
-		$x = GitLab::connection('main')->groups()->all();
+		$x = GitLab::connection('alternative')->groups()->all();
 		
 		//dd( $x );
 		
