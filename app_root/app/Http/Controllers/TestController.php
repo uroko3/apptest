@@ -24,7 +24,7 @@ class TestController extends Controller
 	}
 	
 	public function form() {
-		abort(500);
+		//abort(500);
 		/*
 		DB::transaction( function () {
 			$data = Soyama::lockForUpdate()->find(1);

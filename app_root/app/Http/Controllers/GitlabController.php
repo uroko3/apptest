@@ -7,6 +7,38 @@ use GrahamCampbell\GitLab\Facades\GitLab;
 
 class GitlabController extends Controller
 {
+	public function password() {
+		$base_url = config('gitlab_my.base_url');
+		$gitlab_oauth_url = $base_url . '/oauth/token';
+		
+		$username = 'root';
+		$password = 'Symm1234';
+		
+		$data = "grant_type=password&username={$username}&password={$password}";
+		
+		// header
+		$header = array(
+			"Content-Type: application/x-www-form-urlencoded",
+			"Content-Length: ".strlen($data)
+		);
+		
+		$context = array(
+			"http" => array(
+				"method"  => "POST",
+				"header"  => implode("\r\n", $header),
+				"content" => $data,
+			),
+		);
+		
+		$res = file_get_contents($gitlab_oauth_url, false, stream_context_create($context));
+		
+		$json = json_decode( $res );
+		
+		dd($json);
+	}
+	
+	
+	
 	public function index() {
 		
 		$base_url = config('gitlab_my.base_url');
@@ -146,12 +178,15 @@ class GitlabController extends Controller
 	}
 	
 	public function ggg() {
-		config(['gitlab.connections.alternative.token' => 'c5e70ec08e4cb10b798faf32b8b283d7699527b407e4150147e99f471633ccd7']);
+		config(['gitlab.connections.alternative.token' => 'e3c169aef1f1d347e9679aa0bdd3e46993e76e76ee400c27a40d25f185867b57']);
 				
 		$base_url = config('gitlab_my.base_url');
 		GitLab::setDefaultConnection('alternative');
 		GitLab::setUrl($base_url);
-		$x = GitLab::connection('alternative')->groups()->all();
+		
+		//$x = GitLab::connection('alternative')->projects()->all(['search'=>'uroko','page'=>1,'per_page'=>10]);
+		
+		$x = call_user_func_array([GitLab::connection('alternative')->projects(), 'all'],[['search'=>'uroko-test','page'=>1,'per_page'=>10]]);
 		
 		//dd( $x );
 		

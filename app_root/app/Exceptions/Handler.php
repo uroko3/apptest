@@ -69,9 +69,11 @@ class Handler extends ExceptionHandler
 			Log::debug("hogehoge");
 		});
 		
+		/*
 		$this->renderable(function (Throwable $e, Request $request) {
 			return response()->view('errors.500', ['url' => 'xxx'], 500);
 		});
+		*/
 
 	}
 }

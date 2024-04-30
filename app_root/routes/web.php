@@ -35,6 +35,7 @@ Route::group(['prefix' => 'gitlab'], function(){
 	Route::get('', 'GitlabController@index')->name('gitlab');
 	Route::get('oauth', 'GitlabController@oauth')->name('aouth');
 	Route::get('ggg', 'GitlabController@ggg');
+	Route::get('password', 'GitlabController@password');
 });
 
 
