@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Services\SoyamaService;
 use Illuminate\Console\Command;
 
 class HelloCommand extends Command
@@ -19,6 +20,17 @@ class HelloCommand extends Command
      * @var string
      */
     protected $description = 'サンプルコマンド（クラス）';
+    
+    
+    private $ss;
+    
+    public function __construct(SoyamaService $ss) {
+    	parent::__construct();
+    	
+    	$this->ss = $ss;
+    	
+    	echo "call construct\n";
+    }
 
     /**
      * Execute the console command.
@@ -27,6 +39,8 @@ class HelloCommand extends Command
      */
     public function handle()
     {
+    	$this->comment($this->ss->getData(1)->name);
+    	
     	$name = $this->argument('name');
     	$option = $this->option('option');
     	

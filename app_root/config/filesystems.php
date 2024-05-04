@@ -62,6 +62,17 @@ return [
             'region' => env('AWS_REGION'),
             'bucket' => env('AWS_BUCKET'),
         ],
+    	'sftp' => [
+    		'driver' => 'sftp',
+    		'host' => '(ホスト名)',
+    		'username' => '（ユーザー名）',
+    		'password' => '（パスワード）',
+    		
+    		// 必須なのはここまで
+    		
+    		'root' => '/var/www/hoge/',
+    		'privateKey' => '（プライベートキーのパス）',
+    	],
 
     ],
 

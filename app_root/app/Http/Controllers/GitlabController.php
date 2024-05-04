@@ -178,6 +178,7 @@ class GitlabController extends Controller
 	}
 	
 	public function ggg() {
+		
 		config(['gitlab.connections.alternative.token' => 'e3c169aef1f1d347e9679aa0bdd3e46993e76e76ee400c27a40d25f185867b57']);
 				
 		$base_url = config('gitlab_my.base_url');
@@ -185,11 +186,10 @@ class GitlabController extends Controller
 		GitLab::setUrl($base_url);
 		
 		//$x = GitLab::connection('alternative')->projects()->all(['search'=>'uroko','page'=>1,'per_page'=>10]);
-		
-		$x = call_user_func_array([GitLab::connection('alternative')->projects(), 'all'],[['search'=>'uroko-test','page'=>1,'per_page'=>10]]);
-		
-		//dd( $x );
-		
+
+		$x = call_user_func_array([GitLab::connection('alternative')->projects(), 'all'],[['search'=>'uroko','page'=>1,'per_page'=>10]]);
+
+
 		//$x = GitLab::groups()->all();
 		
 		return view('gitlab.ggg', ['x'=>$x]);

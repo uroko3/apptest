@@ -4,11 +4,13 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 use App\Services\SoyamaService;
 
 use Illuminate\Validation\ValidationException;
 use App\Exceptions\TestException;
+use Carbon\Carbon;
 use App\Models\Soyama;
 use Validator;
 use Exception;
@@ -24,6 +26,20 @@ class TestController extends Controller
 	}
 	
 	public function form() {
+		$file = Storage::disk('sftp')->read('test');
+		
+		dd($file);
+		
+		$datetime = Carbon::now();
+		
+		echo "$datetime<br>";
+		
+		//dd($datetime);
+		
+		$data = Soyama::onWriteConnection()->find(1);
+		$data = Soyama::find(1);
+		dd( $data );
+		
 		//abort(500);
 		/*
 		DB::transaction( function () {

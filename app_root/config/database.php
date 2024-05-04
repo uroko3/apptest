@@ -52,6 +52,27 @@ return [
             'prefix' => '',
             'strict' => true,
             'engine' => null,
+        	// マスタースレーブ構成の時の設定
+        	/*
+        	'read' => [
+        		'host' => [
+        			env('DB_HOST', '127.0.0.1'),
+        			env('DB_HOST', '127.0.0.1'),
+        		],
+        		'database' => env('DB_DATABASE', 'forge'),
+        	],
+        	'write' => [
+        		'host' => [
+        			env('DB_HOST', '127.0.0.1'),
+        		],
+        		'database' => env('DB_DATABASE', 'forge'),
+        		'charset' => 'utf8mb4',
+        		'collation' => 'utf8mb4_unicode_ci',
+        		'sticky' => true,
+        		'strict' => true,
+        		'prefix' => '',
+        	],
+        	*/
         ],
 
         'pgsql' => [
@@ -116,5 +137,4 @@ return [
         ],
 
     ],
-
 ];
