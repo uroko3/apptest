@@ -64,14 +64,17 @@ return [
         ],
     	'sftp' => [
     		'driver' => 'sftp',
-    		'host' => '(ホスト名)',
-    		'username' => '（ユーザー名）',
-    		'password' => '（パスワード）',
+    		'host' => '192.168.33.10',
+    		'username' => 'vagrant',
+    		'password' => 'vagrant',
     		
     		// 必須なのはここまで
+    		'port' => 22,
+    		'timeout' => 30,
+    		'max_tries' => 10,
     		
-    		'root' => '/var/www/hoge/',
-    		'privateKey' => '（プライベートキーのパス）',
+    		'root' => '/home/vagrant',
+    		//'privateKey' => '（プライベートキーのパス）',
     	],
 
     ],
