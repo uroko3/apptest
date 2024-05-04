@@ -45,7 +45,8 @@ class AppServiceProvider extends ServiceProvider
     				],
     				'dir' => [
     					'public' => 0740,
-    					'private' => 7604,
+//    					'private' => 7604,
+    					'private' => 0740,
     				],
     			])
     		);

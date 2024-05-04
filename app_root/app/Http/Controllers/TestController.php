@@ -6,10 +6,15 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
+use Illuminate\Http\File;
+
 use App\Services\SoyamaService;
 
 use Illuminate\Validation\ValidationException;
 use App\Exceptions\TestException;
+
+use Log;
+
 use Carbon\Carbon;
 use App\Models\Soyama;
 use Validator;
@@ -27,8 +32,18 @@ class TestController extends Controller
 	
 	public function form() {
 		$file = Storage::disk('sftp')->read('test');
+		log::info($file);
 		
-		dd($file);
+		$ret = Storage::disk('sftp')->put('test2', 'かきくけこ');
+		log::info($ret);
+		
+		$file_path = storage_path('sample/sample.txt');
+		$tmp_file = new File($file_path);
+		//dd($tmp_file);
+		
+		$ret = Storage::disk('sftp')->putFileAs('sample22', $tmp_file, 'sample.txt');
+		log::info($ret);
+		//dd($ret);
 		
 		$datetime = Carbon::now();
 		
@@ -38,7 +53,7 @@ class TestController extends Controller
 		
 		$data = Soyama::onWriteConnection()->find(1);
 		$data = Soyama::find(1);
-		dd( $data );
+		log::info( $data );
 		
 		//abort(500);
 		/*
