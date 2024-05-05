@@ -34,11 +34,12 @@ class AppServiceProvider extends ServiceProvider
     				$config['port'], // port (optional, default: 22)
     				false, // use agent (optional, default: false)
     				$config['timeout'], // timeout (optional, default: 10)
-    				$config['max'], // max tries (optional, default: 4)
+    				$config['maxTries'], // max tries (optional, default: 4)
     				null, // host fingerprint (optional, default: null),
     				null, // connectivity checker (must be an implementation of 'League\Flysystem\PhpseclibV2\ConnectivityChecker' to check if a connection can be established (optional, omit if you don't need some special handling for setting reliable connections)
     			),
     			$config['root'], // root path (required)
+    			// 以下は必須ではない
     			PortableVisibilityConverter::fromArray([
     				'file' => [
     					'public' => 0640,

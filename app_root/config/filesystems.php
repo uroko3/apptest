@@ -71,7 +71,7 @@ return [
     		// 必須なのはここまで
     		'port' => 22,
     		'timeout' => 30,
-    		'max' => 10,
+    		'maxTries' => 10,
     		
     		'root' => '/home/vagrant',
     		//'privateKey' => '（プライベートキーのパス）',
