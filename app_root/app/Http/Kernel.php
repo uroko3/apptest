@@ -19,6 +19,7 @@ class Kernel extends HttpKernel
         \App\Http\Middleware\TrimStrings::class,
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
         \App\Http\Middleware\TrustProxies::class,
+    	//\App\Http\Middleware\SampleMiddlewareMain::class,
     ];
 
     /**
@@ -35,7 +36,21 @@ class Kernel extends HttpKernel
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             \App\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
+        	\App\Http\Middleware\SampleMiddleware2::class,
         ],
+    	
+    	'sample' => [
+    		\App\Http\Middleware\SampleMiddleware::class,
+    		\App\Http\Middleware\SampleMiddlewareMain::class,
+    	],
+    	
+    	'sample2' => [
+    		\App\Http\Middleware\SampleMiddleware2::class,
+    	],
+    	
+    	'sample3' => [
+    		\App\Http\Middleware\SampleMiddleware3::class,
+    	],
 
         'api' => [
             'throttle:60,1',
@@ -57,5 +72,15 @@ class Kernel extends HttpKernel
         'can' => \Illuminate\Auth\Middleware\Authorize::class,
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
+    	
+    	'home' => \App\Http\Middleware\SampleMiddlewareRoute::class,
+    ];
+    
+    protected $middlewarePriority = [
+    	\App\Http\Middleware\SampleMiddleware::class,
+    	\App\Http\Middleware\SampleMiddleware3::class,
+    	\App\Http\Middleware\SampleMiddlewareRoute::class,
+    	\App\Http\Middleware\SampleMiddlewareMain::class,
+    	\App\Http\Middleware\SampleMiddleware2::class,
     ];
 }
