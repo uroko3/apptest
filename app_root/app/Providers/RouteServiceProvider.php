@@ -40,6 +40,7 @@ class RouteServiceProvider extends ServiceProvider
         $this->mapWebRoutes();
 
         //
+        $this->mapHogeRoutes();
     }
 
     /**
@@ -69,5 +70,12 @@ class RouteServiceProvider extends ServiceProvider
              ->middleware('api')
              ->namespace($this->namespace)
              ->group(base_path('routes/api.php'));
+    }
+    
+    protected function mapHogeRoutes() {
+    	Route::prefix('hoge')
+    		->middleware(['hoge'])
+    		->namespace($this->namespace)
+    		->group(base_path('routes/hoge.php'));
     }
 }

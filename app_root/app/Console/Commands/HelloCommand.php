@@ -30,17 +30,23 @@ class HelloCommand extends Command
      */
     public function handle(SoyamaService $sss, SoyamaService $ssss)
     {
-    	log::info('call HelloCommand');
-    	$this->comment($sss->getData(1)->name);
-    	$this->comment($ssss->getData(1)->name);
-    	
-    	$name = $this->argument('name');
-    	$option = $this->option('option');
-    	
-    	$option_view = 'false';
-    	if( $option === true ) {
-    		$option_view = 'true';
+    	$i = 0;
+    	while(($i++) < 2) {
+    		log::info( "i = $i");
+    		log::info('call HelloCommand');
+    		$this->comment($sss->getData(1)->name);
+    		$this->comment($ssss->getData(1)->name);
+    		
+    		$name = $this->argument('name');
+    		$option = $this->option('option');
+    		
+    		$option_view = 'false';
+    		if( $option === true ) {
+    			$option_view = 'true';
+    		}
+    		
+    		$this->comment('Hello ' . $name . ' ' . $option_view);
+    		sleep(1);
     	}
-        return $this->comment('Hello ' . $name . ' ' . $option_view);
     }
 }

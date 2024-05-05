@@ -51,6 +51,10 @@ class Kernel extends HttpKernel
     	'sample3' => [
     		\App\Http\Middleware\SampleMiddleware3::class,
     	],
+    	
+    	'hoge' => [
+    		\App\Http\Middleware\HogeMiddleware::class,
+    	],
 
         'api' => [
             'throttle:60,1',
