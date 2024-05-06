@@ -38,4 +38,7 @@ Route::group(['prefix' => 'gitlab'], function(){
 	Route::get('password', 'GitlabController@password');
 });
 
+Route::get('/form2', 'FormController@index');
+Route::post('/form2', 'FormController@postValidates');
+
 
