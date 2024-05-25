@@ -21,6 +21,7 @@ use Validator;
 use Exception;
 use Throwable;
 
+
 class TestController extends Controller
 {
 	
@@ -31,17 +32,28 @@ class TestController extends Controller
 	}
 	
 	public function form() {
-		$file = Storage::disk('sftp')->read('test');
-		log::info($file);
+		Log::info('call form');
 		
-		$ret = Storage::disk('sftp')->put('test2', 'かきくけこ');
-		log::info($ret);
+		//dd(config('app.aliases2'));
+		
+		$x = env('UNKI');
+		//dd($x);
+		
+		//$file = Storage::disk('xxx')->read('test');
+		//log::info($file);
+		
+		//$ret = Storage::disk('xxx')->put('test2', 'かきくけこ');
+		//log::info($ret);
+		
+		//$ret = Storage::disk('xxx')->makeDirectory('testdir');
 		
 		$file_path = storage_path('sample/sample.txt');
 		$tmp_file = new File($file_path);
 		//dd($tmp_file);
 		
-		$ret = Storage::disk('sftp')->putFileAs('sample22', $tmp_file, 'sample.txt');
+		//$ret = Storage::disk('sftp')->putFileAs('sample22', $tmp_file, 'sample.txt');
+		//$ret = Storage::disk('s3')->putFileAs('sample22', $tmp_file, 'sample.txt');
+		$ret = Storage::disk('s3')->putFile('/', $tmp_file);
 		log::info($ret);
 		//dd($ret);
 		
@@ -75,7 +87,7 @@ class TestController extends Controller
 		DB::beginTransaction();
 		try {
 			$data = Soyama::lockForUpdate()->find(1);
-			print_r( $data->name . " 1" );
+			dd($data->toArray());
 			
 			$data->fill( ['name'=>'unko3333'] )->save();
 

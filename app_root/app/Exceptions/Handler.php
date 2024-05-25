@@ -3,12 +3,14 @@
 namespace App\Exceptions;
 
 use Symfony\Component\HttpKernel\Exception\HttpException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Illuminate\Validation\ValidationException;
 use App\Exceptions\TestException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Http\Request;
 use \Illuminate\Support\Facades\Log;
 use Throwable;
+use Prophecy\Exception\Doubler\MethodNotFoundException;
 
 class Handler extends ExceptionHandler
 {
@@ -53,7 +55,7 @@ class Handler extends ExceptionHandler
 	public function register()
 	{
 		// これしないとValidationExceptionなどのreportが除外される
-		$this->internalDontReport = [];
+		//$this->internalDontReport = [];
 		
 		$this->reportable(function (ValidationException $e) {
 			//dd('reportable');
@@ -69,12 +71,28 @@ class Handler extends ExceptionHandler
 			Log::debug("hogehoge");
 		});
 		
+		
+		$this->renderable(function (MethodNotFoundException $e, Request $request) {
+			abort(404);
+		});
+		
+		//$this->renderable(function (NotFoundHttpException $e, Request $request) {
+		//	abort(404);
+		//});
+		
+		
 		/*
 		$this->renderable(function (Throwable $e, Request $request) {
 			return response()->view('errors.500', ['url' => 'xxx'], 500);
 		});
 		*/
-		
-
 	}
+	
+	
+	public function registerErrorViewPaths()
+	{
+		return;
+	}
+	
+	
 }

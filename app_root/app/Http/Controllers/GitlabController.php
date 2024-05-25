@@ -179,7 +179,7 @@ class GitlabController extends Controller
 	
 	public function ggg() {
 		
-		config(['gitlab.connections.alternative.token' => 'e3c169aef1f1d347e9679aa0bdd3e46993e76e76ee400c27a40d25f185867b57']);
+		config(['gitlab.connections.alternative.token' => '4f58ea212bbdf532623c67c2001c5b9327e899e502d34ed5eb54662e9ff76bc2']);
 				
 		$base_url = config('gitlab_my.base_url');
 		GitLab::setDefaultConnection('alternative');

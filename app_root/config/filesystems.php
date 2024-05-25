@@ -75,6 +75,40 @@ return [
     		
     		'root' => '/home/vagrant',
     		//'privateKey' => '（プライベートキーのパス）',
+    		'visibility' => 'public',
+    		'filePerm' => 0666,
+    		'directoryPerm' => 0777,
+    	],
+    	'xxx' => [
+    		'driver' => 'sftp',
+    		'host' => '192.168.33.10',
+    		'username' => 'vagrant',
+    		'password' => 'vagrant',
+    		
+    		// 必須なのはここまで
+    		'port' => 22,
+    		'timeout' => 30,
+    		'maxTries' => 10,
+    		
+    		'root' => '/home/vagrant',
+    		//'privateKey' => '（プライベートキーのパス）',
+    		//'visibility' => 'public',
+    		
+    		'filePerm' => 0666,
+    		'directoryPerm' => 0777,
+    		/*
+    		'permissions' => [
+    			'file' => [
+    				'public' => 0666,
+    				'private' => 0666,
+    			],
+    			'dir' => [
+    				'public' => 0744,
+    				'private' => 0700,
+    			],
+    		]
+    		*/
+    		
     	],
 
     ],

@@ -42,12 +42,11 @@ class AppServiceProvider extends ServiceProvider
     			// 以下は必須ではない
     			PortableVisibilityConverter::fromArray([
     				'file' => [
-    					'public' => 0640,
-    					'private' => 0604,
+    					'public' => 0777,
+    					'private' => 0600,
     				],
     				'dir' => [
-    					'public' => 0740,
-//    					'private' => 7604,
+    					'public' => 0777,
     					'private' => 0740,
     				],
     			])
@@ -59,10 +58,12 @@ class AppServiceProvider extends ServiceProvider
     			$adapter,
     			$config
     			*/
-    			new Filesystem($adapter),
+    			new Filesystem($adapter,$config),
     			$adapter,
+    			$config
     		);
 		});
+		
     }
     
     /**

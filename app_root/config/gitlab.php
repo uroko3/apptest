@@ -41,7 +41,7 @@ return [
     'connections' => [
 
         'main' => [
-            'token'   => 'hoge',
+            //'token'   => 'hoge',
             'method'  => 'oauth',
             // 'backoff' => false,
             // 'cache'   => false,
@@ -50,7 +50,7 @@ return [
         ],
 
         'alternative' => [
-            'token'   => 'your-token',
+            //'token'   => '',
             'method'  => 'oauth',
             // 'backoff' => false,
             // 'cache'   => false,
